@@ -119,15 +119,26 @@ export function select(opts) {
     $content.wrap($('<div></div>'));
     $content = $content.parent();
     $content = transformAndClean($content);
-    if (Cleaners[type]) {
-      Cleaners[type]($content, { ...opts, defaultCleaner });
-    }
+    // P.S. parser 插件核心算法。根据算法提取有效内容（其实做的事情是删除所有非有效内容）
+
+    // if (Cleaners[type]) {
+    //   Cleaners[type]($content, { ...opts, defaultCleaner });
+    // }
 
     if (allowMultiple) {
-      return $content
-        .children()
-        .toArray()
-        .map(el => $.html($(el)));
+      return (
+        $content
+          .children()
+          .toArray()
+          // 只要有文本内容的区块。
+          .filter(
+            el =>
+              $(el)
+                .text()
+                .trim() !== ''
+          )
+          .map(el => $.html($(el)))
+      );
     }
 
     return $.html($content);
@@ -231,18 +242,21 @@ const RootExtractor = {
     const date_published = extractResult({ ...opts, type: 'date_published' });
     const author = extractResult({ ...opts, type: 'author' });
     const next_page_url = extractResult({ ...opts, type: 'next_page_url' });
-    const content = extractResult({
+    let content = extractResult({
       ...opts,
       type: 'content',
       extractHtml: true,
       title,
     });
+    content = Array.isArray(content) ? content.join('') : content;
+
     const lead_image_url = extractResult({
       ...opts,
       type: 'lead_image_url',
       content,
     });
     const excerpt = extractResult({ ...opts, type: 'excerpt', content });
+
     const dek = extractResult({ ...opts, type: 'dek', content, excerpt });
     const word_count = extractResult({ ...opts, type: 'word_count', content });
     const direction = extractResult({ ...opts, type: 'direction', title });

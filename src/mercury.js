@@ -50,8 +50,8 @@ const Parser = {
       addCustomExtractor(customExtractor);
     }
 
-    const Extractor = getExtractor(url, parsedUrl, $);
-    // console.log(`Using extractor for ${Extractor.domain}`);
+    const Extractor = getExtractor(url);
+    // console.log(`Using extractor for ${JSON.stringify(Extractor)}`);
 
     // if html still has not been set (i.e., url passed to Parser.parse),
     // set html from the response of Resource.create
@@ -107,6 +107,11 @@ const Parser = {
       result.content = turndownService.turndown(result.content);
     } else if (contentType === 'text') {
       result.content = $.text($(result.content));
+    }
+
+    // 如果当前url没有匹配到任何extractor，返回原始的html作为content
+    if (!Extractor) {
+      result.content = html;
     }
 
     return { ...result, ...extendedTypes };

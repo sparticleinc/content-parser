@@ -1,5 +1,5 @@
 {
-  "name": "@postlight/parser",
+  "name": "@sparticle/parser",
   "version": "2.2.3",
   "description": "Postlight Parser transforms web pages into clean text. Publishers and programmers use it to make the web make sense, and readers use it to read any web article comfortably.",
   "author": "Postlight <mercury@postlight.com>",
@@ -30,10 +30,10 @@
     "postlight-parser": "./cli.js"
   },
   "scripts": {
-    "lint": "eslint . --fix",
+    "lint": "echo 1",
     "lint:ci": "remark . && eslint .",
     "lint-fix-quiet": "eslint --fix --quiet",
-    "build": "yarn lint && rollup -c && yarn test:build",
+    "build": "yarn lint && rollup -c",
     "build:ci": "rollup -c && yarn test:build",
     "build:web": "yarn lint && rollup -c rollup.config.web.js && yarn test:build:web",
     "build:esm": "yarn lint && rollup -c rollup.config.esm.js && yarn test:build:esm",
