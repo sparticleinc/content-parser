@@ -51,7 +51,7 @@ const Parser = {
     }
 
     const Extractor = getExtractor(url);
-    // console.log(`Using extractor for ${JSON.stringify(Extractor)}`);
+    console.log(`Using extractor for ${JSON.stringify(Extractor)}`);
 
     // if html still has not been set (i.e., url passed to Parser.parse),
     // set html from the response of Resource.create
