@@ -1,5 +1,5 @@
 {
-  "name": "@sparticle/parser",
+  "name": "@sparticle/content-parser",
   "version": "2.2.3",
   "description": "Postlight Parser transforms web pages into clean text. Publishers and programmers use it to make the web make sense, and readers use it to read any web article comfortably.",
   "author": "Postlight <mercury@postlight.com>",
