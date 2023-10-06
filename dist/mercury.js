@@ -8,10 +8,10 @@ var _JSON$stringify = _interopDefault(require('@babel/runtime-corejs2/core-js/js
 var _objectWithoutProperties = _interopDefault(require('@babel/runtime-corejs2/helpers/objectWithoutProperties'));
 var _asyncToGenerator = _interopDefault(require('@babel/runtime-corejs2/helpers/asyncToGenerator'));
 var URL = _interopDefault(require('url'));
-var cheerio = _interopDefault(require('cheerio'));
+var cheerio = require('cheerio');
+var cheerio__default = _interopDefault(cheerio);
 var TurndownService = _interopDefault(require('turndown'));
 var iconv = _interopDefault(require('iconv-lite'));
-var fs = _interopDefault(require('fs'));
 var _parseInt = _interopDefault(require('@babel/runtime-corejs2/core-js/parse-int'));
 var _slicedToArray = _interopDefault(require('@babel/runtime-corejs2/helpers/slicedToArray'));
 var _Promise = _interopDefault(require('@babel/runtime-corejs2/core-js/promise'));
@@ -197,7 +197,7 @@ function getEncoding(str) {
   return encoding;
 }
 
-var REQUEST_HEADERS = cheerio.browser ? {} : {
+var REQUEST_HEADERS = cheerio__default.browser ? {} : {
   'User-Agent': 'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36'
 }; // The number of milliseconds to attempt to fetch a resource before timing out.
 
@@ -1687,7 +1687,6 @@ var Resource = {
       contentType: contentType,
       alreadyDecoded: alreadyDecoded
     });
-    console.log('Resource.generateDoc: $', $('#main-outlet').text().trim().length);
 
     if ($.root().children().length === 0) {
       throw new Error('No children, likely a bad parse.');
@@ -1705,11 +1704,10 @@ var Resource = {
         alreadyDecoded = _ref2$alreadyDecoded === void 0 ? false : _ref2$alreadyDecoded;
 
     if (alreadyDecoded) {
-      fs.writeFile("./output/temp.txt", content, function (err) {
-        if (err) throw err;
-        console.log("content has been saved!");
+      return cheerio.load(content, {
+        scriptingEnabled: false // 不要把 noscript 标签当成文本处理。
+
       });
-      return cheerio.load(content);
     }
 
     var encoding = getEncoding(contentType);
@@ -6659,7 +6657,7 @@ var GenericContentExtractor = {
         title = _ref.title,
         url = _ref.url;
     opts = _objectSpread({}, this.defaultOpts, opts);
-    $ = $ || cheerio.load(html); // Cascade through our extraction-specific opts in an ordered fashion,
+    $ = $ || cheerio__default.load(html); // Cascade through our extraction-specific opts in an ordered fashion,
     // turning them off as we try to extract content.
 
     var node = this.getContentNode($, title, url, opts);
@@ -6681,7 +6679,7 @@ var GenericContentExtractor = {
       })), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
         var key = _step.value;
         opts[key] = false;
-        $ = cheerio.load(html);
+        $ = cheerio__default.load(html);
         node = this.getContentNode($, title, url, opts);
 
         if (nodeIsSufficient(node)) {
@@ -7554,7 +7552,7 @@ var GenericExcerptExtractor = {
 };
 
 var getWordCount = function getWordCount(content) {
-  var $ = cheerio.load(content);
+  var $ = cheerio__default.load(content);
   var $content = $('div').first();
   var text = normalizeSpaces($content.text());
   return text.split(/\s/).length;
@@ -7598,7 +7596,7 @@ var GenericExtractor = {
         $ = options.$;
 
     if (html && !$) {
-      var loaded = cheerio.load(html);
+      var loaded = cheerio__default.load(html);
       options.$ = loaded;
     }
 
@@ -8043,10 +8041,10 @@ var Parser = {
               // set url to window.location.href and load the html
               // from the current page
 
-              if (!url && cheerio.browser) {
+              if (!url && cheerio__default.browser) {
                 url = window.location.href; // eslint-disable-line no-undef
 
-                html = html || cheerio.html();
+                html = html || cheerio__default.html();
               }
 
               parsedUrl = URL.parse(url);
@@ -8172,7 +8170,7 @@ var Parser = {
 
     return parse;
   }(),
-  browser: !!cheerio.browser,
+  browser: !!cheerio__default.browser,
   // A convenience method for getting a resource
   // to work with, e.g., for custom extractor generator
   fetchResource: function fetchResource(url) {

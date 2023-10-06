@@ -1,6 +1,5 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import iconv from 'iconv-lite';
-import fs from 'fs';
 
 import { getEncoding } from 'utils/text';
 import { fetchResource } from './utils';
@@ -41,7 +40,6 @@ const Resource = {
       return result;
     }
 
-    // console.log('Resource.create: result', result);
     return this.generateDoc(result);
   },
 
@@ -55,12 +53,6 @@ const Resource = {
     }
 
     let $ = this.encodeDoc({ content, contentType, alreadyDecoded });
-    console.log(
-      'Resource.generateDoc: $',
-      $('#main-outlet')
-        .text()
-        .trim().length
-    );
 
     if ($.root().children().length === 0) {
       throw new Error('No children, likely a bad parse.');
@@ -75,11 +67,9 @@ const Resource = {
 
   encodeDoc({ content, contentType, alreadyDecoded = false }) {
     if (alreadyDecoded) {
-      fs.writeFile(`./output/temp.txt`, content, err => {
-        if (err) throw err;
-        console.log(`content has been saved!`);
+      return cheerio.load(content, {
+        scriptingEnabled: false, // 不要把 noscript 标签当成文本处理。
       });
-      return cheerio.load(content);
     }
 
     const encoding = getEncoding(contentType);
