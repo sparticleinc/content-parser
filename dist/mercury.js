@@ -11,6 +11,7 @@ var URL = _interopDefault(require('url'));
 var cheerio = _interopDefault(require('cheerio'));
 var TurndownService = _interopDefault(require('turndown'));
 var iconv = _interopDefault(require('iconv-lite'));
+var fs = _interopDefault(require('fs'));
 var _parseInt = _interopDefault(require('@babel/runtime-corejs2/core-js/parse-int'));
 var _slicedToArray = _interopDefault(require('@babel/runtime-corejs2/helpers/slicedToArray'));
 var _Promise = _interopDefault(require('@babel/runtime-corejs2/core-js/promise'));
@@ -1686,6 +1687,7 @@ var Resource = {
       contentType: contentType,
       alreadyDecoded: alreadyDecoded
     });
+    console.log('Resource.generateDoc: $', $('#main-outlet').text().trim().length);
 
     if ($.root().children().length === 0) {
       throw new Error('No children, likely a bad parse.');
@@ -1703,6 +1705,10 @@ var Resource = {
         alreadyDecoded = _ref2$alreadyDecoded === void 0 ? false : _ref2$alreadyDecoded;
 
     if (alreadyDecoded) {
+      fs.writeFile("./output/temp.txt", content, function (err) {
+        if (err) throw err;
+        console.log("content has been saved!");
+      });
       return cheerio.load(content);
     }
 

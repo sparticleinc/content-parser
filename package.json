@@ -1,6 +1,6 @@
 {
   "name": "@sparticle/content-parser",
-  "version": "2.2.5",
+  "version": "2.2.6",
   "description": "Postlight Parser transforms web pages into clean text. Publishers and programmers use it to make the web make sense, and readers use it to read any web article comfortably.",
   "author": "Postlight <mercury@postlight.com>",
   "homepage": "https://reader.postlight.com",
@@ -117,7 +117,7 @@
     "@babel/runtime-corejs2": "^7.2.0",
     "@postlight/ci-failed-test-reporter": "^1.0",
     "browser-request": "github:postlight/browser-request#feat-add-headers-to-response",
-    "cheerio": "^0.22.0",
+    "cheerio": "^1.0.0-rc.12",
     "difflib": "github:postlight/difflib.js",
     "ellipsize": "0.1.0",
     "iconv-lite": "0.5.0",
@@ -161,8 +161,5 @@
       "prettier --write",
       "git add"
     ]
-  },
-  "resolutions": {
-    "cheerio": "^1.0.0-rc.12"
   }
 }
