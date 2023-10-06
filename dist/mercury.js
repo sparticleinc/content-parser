@@ -4,7 +4,6 @@ function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'defau
 
 var _regeneratorRuntime = _interopDefault(require('@babel/runtime-corejs2/regenerator'));
 var _objectSpread = _interopDefault(require('@babel/runtime-corejs2/helpers/objectSpread'));
-var _JSON$stringify = _interopDefault(require('@babel/runtime-corejs2/core-js/json/stringify'));
 var _objectWithoutProperties = _interopDefault(require('@babel/runtime-corejs2/helpers/objectWithoutProperties'));
 var _asyncToGenerator = _interopDefault(require('@babel/runtime-corejs2/helpers/asyncToGenerator'));
 var URL = _interopDefault(require('url'));
@@ -8079,8 +8078,8 @@ var Parser = {
                 addExtractor(customExtractor);
               }
 
-              Extractor = getExtractor(url);
-              console.log("Using extractor for ".concat(_JSON$stringify(Extractor))); // if html still has not been set (i.e., url passed to Parser.parse),
+              Extractor = getExtractor(url); // console.log(`Using extractor for ${JSON.stringify(Extractor)}`);
+              // if html still has not been set (i.e., url passed to Parser.parse),
               // set html from the response of Resource.create
 
               if (!html) {
@@ -8114,11 +8113,11 @@ var Parser = {
               _result = result, title = _result.title, next_page_url = _result.next_page_url; // Fetch more pages if next_page_url found
 
               if (!(fetchAllPages && next_page_url)) {
-                _context.next = 26;
+                _context.next = 25;
                 break;
               }
 
-              _context.next = 23;
+              _context.next = 22;
               return collectAllPages({
                 Extractor: Extractor,
                 next_page_url: next_page_url,
@@ -8130,18 +8129,18 @@ var Parser = {
                 url: url
               });
 
-            case 23:
+            case 22:
               result = _context.sent;
-              _context.next = 27;
+              _context.next = 26;
               break;
 
-            case 26:
+            case 25:
               result = _objectSpread({}, result, {
                 total_pages: 1,
                 rendered_pages: 1
               });
 
-            case 27:
+            case 26:
               if (contentType === 'markdown') {
                 turndownService = new TurndownService();
                 result.content = turndownService.turndown(result.content);
@@ -8156,7 +8155,7 @@ var Parser = {
 
               return _context.abrupt("return", _objectSpread({}, result, extendedTypes));
 
-            case 30:
+            case 29:
             case "end":
               return _context.stop();
           }
