@@ -114,7 +114,8 @@ const Parser = {
       result.content = html;
     }
 
-    return { ...result, ...extendedTypes };
+    // 把获取到的Extractor也返回，让外部程序也可以利用extractor配置文件。
+    return { ...result, ...extendedTypes, Extractor };
   },
 
   browser: !!cheerio.browser,

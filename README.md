@@ -4,6 +4,7 @@
 2. Extractor 配置文件增加 content.includedPaths 字段，支持多个匹配路径，如果匹配到任意一个，就会使用该 Extractor。路径字符串会被当成正则表达式字符串。
 3. Extractor 配置文件的 domain 字段现在其实是可以填任何字符串，但一般只填域名。该域名在检测配对时，只要被包含在 url 中就算匹配成功。之前是完全匹配才行。
 4. 修改包名为：@sparticle/content-parser
+5. Parser.parse 返回数据增加返回匹配到的 Extractor，方便把 Extractor 信息传递给下游。
 
 # Postlight Parser - Extracting content from chaos
 

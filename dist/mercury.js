@@ -8151,9 +8151,12 @@ var Parser = {
 
               if (!Extractor) {
                 result.content = html;
-              }
+              } // 把获取到的Extractor也返回，让外部程序也可以利用extractor配置文件。
 
-              return _context.abrupt("return", _objectSpread({}, result, extendedTypes));
+
+              return _context.abrupt("return", _objectSpread({}, result, extendedTypes, {
+                Extractor: Extractor
+              }));
 
             case 29:
             case "end":
